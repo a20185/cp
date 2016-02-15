@@ -1,13 +1,20 @@
 extends layout
 
 block body
-  div
+  div(ng-controller='mainCtrl')
     h2 My Blog
     ul
       li
         a(href='/') Home
       li
-        a(href='/addPost') Add a new post
+        p(href='/login' , ng-hide='showAuth()') Guest
+        p(ng-show='showAuth()') {{currentUser}}
+      li
+        a(href='/addPost' , ng-show='showAuth()') Add a new post
+        a(href='/login' , ng-hide='showAuth()') Login
+      li
+        a(href='/register' , ng-hide='showAuth()') Register
+        a(href='/logout' , ng-show='showAuth()') Log Out!
 
     div(ng-view)
 

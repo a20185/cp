@@ -1,0 +1,17 @@
+div#signup_account
+    div.form_user
+        input#signup_username(type='text' , name='username' , placeholder='用户名' , ng-model='form.username')
+        span
+            span(ng-show='validate.user') 用户名格式正确
+            span(ng-hide='validate.user') {{userCheck()}}
+    div.form_password
+        input#signup_password(type='password' , name='password' , placeholder='密码' , ng-model='form.passwd')
+        span
+            span(ng-show='validate.passwd') 密码格式正确
+            span(ng-hide='validate.passwd') {{passCheck()}}
+        //- </input>
+div
+    button#signup_forms_submit(type='button' , ng-click='getLogin()' , ng-show='canClick()')
+        span
+            strong Login
+    div(ng-hide='canClick()') 请检查用户名和密码

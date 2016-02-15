@@ -9,12 +9,24 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
       //   controller: IndexCtrl
       // }).
       when('/' , {
+          templateUrl: 'partials/index',
+          controller: IndexCtrl
+      }).
+      when('/assignments' , {
           templateUrl: 'partials/ass',
           controller: AssCtrl
       }).
       when('/submit/:id' , {
           templateUrl: 'partials/upload',
           controller: UploadCtrl
+      }).
+      when('/login' , {
+          templateUrl: 'partials/login',
+          controller: LoginCtrl
+      }).
+      when('/register' , {
+          templateUrl: 'partials/register',
+          controller: RegisterCtrl
       }).
       when('/addPost', {
         templateUrl: 'partials/addPost',

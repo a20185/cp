@@ -1,23 +1,18 @@
-/*
- * Serve JSON to our AngularJS client
- */
-
-// For a real app, you'd make database requests here.
-// For this example, "data" acts like an in-memory "database"
+var crypto = require('crypto');
 var fs = require('fs');
 
-var data = {
-  "posts": [
-    {
-      "title": "Lorem ipsum",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "title": "Sed egestas",
-      "text": "Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus."
-    }
-  ]
-};
+// var data = {
+//   "posts": [
+//     {
+//       "title": "Lorem ipsum",
+//       "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+//     },
+//     {
+//       "title": "Sed egestas",
+//       "text": "Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus."
+//     }
+//   ]
+// };
 
 /**
  * [job description] Assignment model
@@ -217,6 +212,69 @@ exports.editPost = function (req, res) {
   } else {
     res.json(false);
   }
+};
+
+exports.login = function(req , res , next) {
+
+};
+
+exports.register = function(req , res , next) {
+
+};
+
+exports.loginPost = function(req , res , next) {
+  var User = global.dbHandle.getModel('user');
+  var myName = req.body.username;
+  User.findOne({username:myName},function(err,doc){
+        if(err){
+            // res.send(500);
+            res.json({status: false , why:"NetWork Error!"});
+            console.log(err);
+            console.log('USERFAILED');
+        }else if(!doc){
+            req.session.error = '用户名不存在';
+            console.log("userName == " + myName);
+            console.log(req.session.error);
+            // res.writeHead(404, {'Content-Type': 'text/plain'});
+            // res.end("" + req.session.error);
+            res.json({status: false , why:"用户名不存在"});
+        }else{
+            var md5 = crypto.createHash('md5');
+            var myPasswd = md5.update(req.body.passwd).digest('hex');
+            console.log("Encrypted:: " + myPasswd);
+            if(myPasswd != doc.password){
+                req.session.error = "密码错误";
+                console.log("Password Wrong!");
+                console.log("The password should be:" + doc.password);
+                res.json({status: false , why:"密码错误"});
+            }else{
+                req.session.user = doc;
+                console.log(req.session.user);
+                // res.send(200);
+                console.log(doc.username);
+                res.json({status: true , why:"Success" , user: doc.username});
+            }
+        }
+  });
+};
+
+exports.online = function(req , res , next) {
+  if (req.session.user) {
+    res.json({
+      status: true,
+      why: "Already Logged In!",
+      username: req.session.user.username
+    });
+  } else {
+    res,json({
+      status: false,
+      why: "Not yet Logged In !"
+    })
+  }
+}
+
+exports.registerPost = function(req , res , next) {
+
 };
 
 exports.upload = function(req, res, next) {

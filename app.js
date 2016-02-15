@@ -67,6 +67,7 @@ app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 
 // JSON API
+app.get('/onlineStatus' , api.online);
 
 app.get('/login', api.login);
 app.post('/api/login' , api.loginPost);
