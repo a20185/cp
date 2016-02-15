@@ -1,0 +1,20 @@
+p There are {{ass.length}} assignments
+p Currently {{ass.availableNum}} Available , {{ass.judging}} are Judging , {{ass.completed}} are finished.
+br
+
+div(ng-repeat='assignment in ass')
+  h3 Homework {{assignment.job.index + 1}} : {{assignment.job.title}}
+
+  //a(href='/submission/{{assignment.index}}') Submit Now!
+  //br
+
+  a(href='/submit/{{assignment.index}}') Upload Source
+  br
+
+  a(href='{{assignment.job.refer}}') Description
+  |  -
+  a(href='/comment/{{assignment.index}}') Comment
+  |  - 
+  a(href='/getSource/{{assignment.index}}') My Source
+//  |  - 
+//  a(href='/deletePost/{{post.id}}') Delete

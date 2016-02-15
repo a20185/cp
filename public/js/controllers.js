@@ -19,6 +19,21 @@ function AddPostCtrl($scope, $http, $location) {
   };
 }
 
+// Read Assignment Data
+function AssCtrl($scope , $http , $location) {
+  $scope.ass = [];
+  $http.get('/api/assignments').
+    success(function(data, status , headers , config) {
+      $scope.ass = data.assignments;
+      console.log('/** Successfully get Assignment Datas **/');
+    });
+}
+
+function UploadCtrl($scope , $http , $location , $routeParams) {
+  console.log('Completed?');
+}
+
+
 function ReadPostCtrl($scope, $http, $routeParams) {
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {

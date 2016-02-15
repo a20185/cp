@@ -4,9 +4,17 @@
 angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
-      when('/', {
-        templateUrl: 'partials/index',
-        controller: IndexCtrl
+      // when('/', {
+      //   templateUrl: 'partials/index',
+      //   controller: IndexCtrl
+      // }).
+      when('/' , {
+          templateUrl: 'partials/ass',
+          controller: AssCtrl
+      }).
+      when('/submit/:id' , {
+          templateUrl: 'partials/upload',
+          controller: UploadCtrl
       }).
       when('/addPost', {
         templateUrl: 'partials/addPost',
